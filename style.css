@@ -1,0 +1,2118 @@
+/* =========================================================
+   FONTES
+   ========================================================= */
+@font-face {
+  font-family: "Mangaba";
+  src: url("./fonts/Mangaba.otf");
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("./fonts/SATOSHI-REGULAR.OTF");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Satoshi Light";
+  src: url("./fonts/SATOSHI-LIGHT.OTF");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Satoshi Medium";
+  src: url("./fonts/SATOSHI-MEDIUM.OTF");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Satoshi Medium Italic";
+  src: url("./fonts/SATOSHI-MEDIUMITALIC.OTF");
+  font-style: italic;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Satoshi Bold";
+  src: url("./fonts/SATOSHI-BOLD.OTF");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Satoshi Black";
+  src: url("./fonts/SATOSHI-BLACK.OTF");
+  font-weight: 900;
+}
+
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root {
+  --page-scale: 0.8;
+}
+
+:root {
+  /* cores */
+  --laranja: #f25116;
+  --laranja-claro: #ff8051;
+  --branco: #f2f2f2;
+  --marrom: #26110c;
+
+  /* dimensões / utilitários */
+  --container-max: 1240px;
+  --radius-md: 20px;
+  --radius-lg: 22px;
+  --shadow-lg: 0 14px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   RESET / BASE
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Satoshi", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  background: var(--branco);
+  color: var(--marrom);
+  letter-spacing: -0.07em;
+  line-height: 0.97;
+  zoom: var(--page-scale);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: min(var(--container-max), 90%);
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Mangaba", cursive;
+  letter-spacing: 0.2px; /* Mangaba com tracking natural */
+  line-height: 1.12;
+  color: var(--marrom);
+  font-weight: 100;
+}
+
+h1 {
+  font-size: clamp(40px, 5.4vw, 84px);
+  font-weight: 100;
+}
+h2 {
+  font-size: clamp(35px, 3.4vw, 69px);
+  font-weight: 100;
+}
+h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 100;
+}
+
+p {
+  font-size: 22px;
+}
+
+@supports not (zoom: 1) {
+  body {
+    transform: scale(var(--page-scale));
+    transform-origin: top center;
+    /* compensa a redução para ocupar toda a largura */
+    width: calc(100% / var(--page-scale));
+  }
+}
+
+/* Utils */
+.highlight-orange {
+  color: var(--laranja);
+}
+.marrom {
+  color: var(--marrom);
+  font-weight: 700;
+}
+
+/* =========================================================
+   BOTÕES – base + interações (drop-in seguro)
+   ========================================================= */
+
+/* Curva/tempo padrão das animações do botão */
+:root {
+  --btn-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --btn-speed: 160ms;
+}
+
+/* Base visual do botão laranja */
+.btn-laranja {
+  -webkit-tap-highlight-color: transparent;
+
+  /* Visual */
+  background: var(--laranja);
+  color: #fff;
+  border: 2px solid var(--laranja-claro);
+  border-radius: 36px;
+  box-shadow: 0 12px 22px rgba(242, 81, 22, 0.22),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+
+  /* Texto/espaçamento */
+  font-family: "Satoshi Bold", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  text-decoration: none;
+  padding: 16px 28px;
+
+  /* Centralização certinha */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  /* Transições suaves */
+  transition: transform var(--btn-speed) var(--btn-ease),
+    box-shadow var(--btn-speed) var(--btn-ease),
+    background-color var(--btn-speed) var(--btn-ease),
+    border-color var(--btn-speed) var(--btn-ease),
+    filter var(--btn-speed) var(--btn-ease);
+  will-change: transform, box-shadow, filter;
+}
+
+/* Variante menor (continua podendo ser sobrescrita por seções) */
+.btn-small {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 28px;
+}
+
+/* Hover: leve lift + sombra um pouco maior */
+.btn-laranja:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(242, 81, 22, 0.28),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+  filter: brightness(1.03);
+}
+
+/* Active/press: reduz lift e sombra */
+.btn-laranja:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 8px 18px rgba(242, 81, 22, 0.22),
+    inset 0 2px 0 rgba(0, 0, 0, 0.14);
+  filter: brightness(0.98);
+}
+
+/* Foco acessível (sem empurrar layout) */
+.btn-laranja:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--laranja-claro),
+    0 14px 26px rgba(242, 81, 22, 0.24);
+}
+
+/* Estado disabled */
+.btn-laranja[disabled],
+.btn-laranja.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+}
+
+/* Seta opcional: use APENAS quando quiser seta automática
+   Ex.: <a class="btn-laranja has-arrow">Comprar</a>  */
+.btn-laranja.has-arrow::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.55rem;
+  transition: transform var(--btn-speed) var(--btn-ease);
+}
+.btn-laranja.has-arrow:hover::after {
+  transform: translateX(4px);
+}
+.btn-laranja.has-arrow:active::after {
+  transform: translateX(6px);
+}
+
+/* Respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .btn-laranja,
+  .btn-laranja.has-arrow::after {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero-section {
+  background: var(--marrom);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section .container {
+  position: relative;
+  padding: 86px 0 120px;
+  min-height: 640px;
+}
+
+.hero-section .logo {
+  width: 68px;
+  display: block;
+  margin: 0 0 14px 6px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 640px;
+}
+
+.hero-section h1 {
+  color: #fff;
+  line-height: 0.97;
+  margin: 0 0 12px;
+}
+.hero-section p {
+  color: #fff;
+  font-family: "Satoshi Light";
+  font-size: clamp(18px, 2.1vw, 25px);
+  line-height: 1.2;
+  margin: 0 0 26px;
+  max-width: 600px;
+}
+.hero-section p strong {
+  font-family: "Satoshi Bold";
+  color: #fff;
+}
+
+.hero-section .btn-laranja {
+  /* aparência base */
+  background: var(--laranja);
+  color: #fff;
+  border: 3px solid var(--laranja-claro);
+  border-radius: 30px;
+
+  /* tamanho/largura do “pill” */
+  padding: clamp(8px, 2.2vw, 22px) clamp(8px, 5.8vw, 34px);
+  font-size: clamp(22px, 2.6vw, 27px);
+  font-family: "Satoshi Black", Arial, sans-serif;
+  letter-spacing: -7%;
+
+  /* largura parecida com o layout (sem estourar em telas menores) */
+  width: clamp(180px, 42vw, 410px);
+
+  /* centraliza o conteúdo */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  /* brilho suave ao redor, como no mock */
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35),
+    0 0 0 2px rgba(255, 255, 255, 0.12), 0 0 48px rgba(242, 81, 22, 0.35),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.1);
+
+  /* transições já herdadas, só garantimos aqui */
+  transition: transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    background-color 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* seta do CTA (usa a que já definimos no .btn-laranja::after) */
+.hero-section .btn-laranja::after {
+  content: "→"; /* deixe vazio se já escreveu a seta no HTML */
+  font-size: 1em; /* acompanha o texto */
+  transform: translateX(0);
+  transition: transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.hero-section .btn-laranja:hover::after {
+  transform: translateX(6px);
+}
+
+/* hover/active com mais presença, inspirado no mock */
+.hero-section .btn-laranja:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.38),
+    0 0 0 2px rgba(255, 255, 255, 0.16), 0 0 64px rgba(242, 81, 22, 0.45),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.hero-section .btn-laranja:active {
+  transform: translateY(-1px) scale(0.99);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 2px rgba(255, 255, 255, 0.12), 0 0 42px rgba(242, 81, 22, 0.38),
+    inset 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* mobile: deixa mais contido para não quebrar o layout */
+@media (max-width: 560px) {
+  .hero-section .btn-laranja {
+    width: clamp(260px, 80vw, 420px);
+    padding: 16px 32px;
+    font-size: clamp(18px, 5.2vw, 24px);
+  }
+}
+
+.manual-img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-48%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 1400px) {
+  .manual-img {
+    right: clamp(-120px, -6vw, 16px);
+    width: clamp(560px, 42vw, 650px);
+  }
+}
+
+/* Responsivo: livro volta para o fluxo e centraliza */
+@media (max-width: 1024px) {
+  .hero-section .container {
+    padding: 72px 0 60px;
+    min-height: initial;
+  }
+  .manual-img {
+    position: static;
+    transform: none;
+    width: clamp(360px, 64vw, 520px);
+    margin: 24px auto 0;
+    display: block;
+  }
+}
+
+/* =========================================================
+   POR QUE TANTAS DIETAS FALHAM?
+   ========================================================= */
+.section-dietas {
+  padding: 94px 0 74px;
+
+  /* variáveis locais da seção (desktop) */
+  --card-icon-size: 67px; /* ícone um pouco menor para reduzir a altura */
+  --card-pad-left: 120px; /* padding esquerdo proporcional ao ícone */
+  --card-radius: 24px;
+  --card-border: 4px;
+
+  /* tipografia do parágrafo do card */
+  --card-text-size: 25px; /* tamanho único (strong = normal) */
+  --card-line: 1.18; /* mais enxuto que 1.25 */
+}
+
+.section-dietas h2 {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-dietas h2 .highlight-orange {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.section-dietas > .container > p {
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 27px;
+}
+
+.cards-dietas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 24px; /* respiro equilibrado */
+  margin: 18px 0 18px;
+}
+
+.card {
+  background: var(--laranja);
+  border: var(--card-border) solid var(--laranja-claro);
+  border-radius: var(--card-radius);
+  padding: 18px 24px 18px var(--card-pad-left);
+  position: relative;
+  min-height: 130px; /* altura mínima mais baixa como no layout */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+
+  /* garante que nada ultrapasse os cantos arredondados,
+     sem mudar tamanho/posicionamento */
+  overflow: hidden;
+
+  /* transições do card */
+  transition: transform 220ms ease, box-shadow 220ms ease,
+    border-color 220ms ease, background-color 220ms ease;
+  will-change: transform, box-shadow;
+}
+
+.card img {
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  width: var(--card-icon-size);
+  height: var(--card-icon-size);
+  object-fit: contain;
+
+  /* centraliza verticalmente */
+  transform: translateY(-50%);
+
+  /* animação suave do ícone */
+  transform-origin: left center;
+  transition: transform 220ms ease, filter 220ms ease;
+  will-change: transform;
+}
+
+/* parágrafo único dentro do card */
+.card-text {
+  color: #fff;
+  font-size: clamp(16px, 1.7vw, var(--card-text-size));
+  line-height: var(--card-line);
+  margin: 0;
+}
+
+/* “título” embutido: mesmo tamanho, só muda o peso/cor */
+.card-text strong {
+  font-family: "Satoshi Bold";
+  font-weight: 700;
+  color: var(--marrom);
+  font-size: inherit; /* <<< garante que NÃO fique maior */
+  line-height: inherit;
+  letter-spacing: inherit; /* segue o -7% global */
+}
+
+/* aviso */
+.alert-box {
+  background: var(--marrom);
+  color: #fff;
+  font-family: "Satoshi Bold";
+  padding: 2px 2px;
+  box-shadow: 0 8px 16px rgba(242, 81, 22, 0.18);
+  width: fit-content;
+  margin: 38px auto 0;
+}
+
+/* ----------------- Responsivo dos cards ----------------- */
+@media (max-width: 1100px) {
+  .section-dietas {
+    --card-icon-size: 50px;
+    --card-pad-left: 102px;
+    --card-text-size: 18.5px;
+  }
+}
+
+@media (max-width: 820px) {
+  .cards-dietas {
+    grid-template-columns: 1fr;
+  }
+  .section-dietas {
+    --card-icon-size: 44px;
+    --card-pad-left: 92px;
+    --card-text-size: 17px;
+    --card-line: 1.2; /* um tiquinho mais de respiro em telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .section-dietas {
+    --card-icon-size: 38px;
+    --card-pad-left: 84px;
+    --card-text-size: 16px;
+  }
+}
+
+/* =========================================================
+   EFEITOS DE INTERAÇÃO (hover/focus) – sem alterar layout
+   ========================================================= */
+
+/* card “levanta” e sombra intensifica */
+.cards-dietas .card:hover,
+.cards-dietas .card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.16),
+    0 0 0 3px rgba(255, 255, 255, 0.35); /* aro externo sutil */
+}
+
+/* ícone: mantém centralização vertical e faz um micro respiro.
+   IMPORTANTE: preserva o translateY(-50%) para não “pular”. */
+.cards-dietas .card:hover img,
+.cards-dietas .card:focus-within img {
+  transform: translateY(-50%) scale(1.03) rotate(-2deg);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
+}
+
+/* feedback de clique (press) */
+.cards-dietas .card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* brilho varrendo o card */
+.cards-dietas .card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.18) 35%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+  pointer-events: none;
+}
+.cards-dietas .card:hover::after,
+.cards-dietas .card:focus-within::after {
+  transform: translateX(120%);
+}
+
+/* acessibilidade: reduz movimentos se o usuário preferir */
+@media (prefers-reduced-motion: reduce) {
+  .cards-dietas .card,
+  .cards-dietas .card img,
+  .cards-dietas .card::after {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   O PODER DO PSYLLIUM
+   ========================================================= */
+.section-poder {
+  padding: clamp(40px, 6vw, 50px) 0;
+}
+
+/* grid mais compacto e colunas equilibradas */
+.section-poder .container {
+  display: grid;
+  grid-template-columns: minmax(440px, 0.98fr) minmax(440px, 1.02fr);
+  column-gap: clamp(12px, 2vw, 20px); /* era 28px */
+  row-gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+}
+
+/* imagem “cola” no texto e mantém tamanho fluido */
+.poder-img {
+  justify-self: end;
+  margin-right: -10px; /* puxa a imagem ~10px em direção ao texto */
+}
+.poder-img img {
+  width: min(460px, 100%); /* limita para não “estourar” */
+  display: block;
+  border-radius: 28px; /* cantos arredondados como no layout */
+}
+
+/* coluna de texto com largura confortável para o bloco */
+.poder-texto {
+  max-width: 540px;
+}
+
+/* tipografia do parágrafo introdutório levemente mais “cheia” */
+.poder-descricao {
+  font-family: "Satoshi Medium";
+  font-size: 27px;
+  margin: 12px 0 10px;
+  line-height: 1.22;
+}
+
+/* lista um pouco mais espaçada, checks alinhados */
+.beneficios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+.beneficios-lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px; /* mais respiro entre ícone e texto */
+  margin-bottom: 10px;
+}
+.beneficios-lista img {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+.beneficios-lista span {
+  font-size: 27px;
+  color: var(--marrom);
+}
+
+/* telas maiores: encosta um pouco mais a imagem (sem exagerar) */
+@media (min-width: 1280px) {
+  .section-poder .container {
+    column-gap: clamp(120px, 1.5vw, 418px);
+  }
+  .poder-img {
+    margin-right: -160px;
+  }
+}
+
+/* responsivo: 1 coluna e centraliza a imagem */
+@media (max-width: 992px) {
+  .section-poder .container {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .poder-img {
+    justify-self: center;
+    margin-right: 0;
+  }
+  .poder-texto {
+    max-width: 100%;
+  }
+}
+
+/* =========================================================
+   POR QUE FUNCIONA TÃO BEM
+   ========================================================= */
+.section-funciona {
+  padding: 84px 0 76px;
+}
+
+.dark-bg {
+  background: var(--marrom);
+  border-radius: 65px;
+  padding: 66px;
+  color: #fff;
+
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  /* evita vazamento de sombras internas em cantos arredondados */
+  overflow: hidden;
+}
+
+.section-funciona h2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.funciona-lista {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* base dos cards */
+.funciona-lista li {
+  text-align: center;
+  font-family: "Satoshi Medium";
+  padding: 14px 10px;
+  border-radius: 18px;
+  font-size: clamp(18px, 2.2vw, 24px);
+  line-height: 1.22;
+
+  /* animação de “lift” */
+  position: relative;
+  transition: transform 220ms ease, box-shadow 220ms ease,
+    background-color 220ms ease, color 220ms ease;
+  will-change: transform, box-shadow;
+}
+
+/* o <strong> acompanha a cor do card */
+.funciona-lista li strong {
+  color: inherit;
+  font-family: "Satoshi Bold";
+}
+
+/* PARES: laranja com texto branco */
+.funciona-lista li:nth-child(even) {
+  background: var(--laranja);
+  color: #fff;
+}
+
+/* ÍMPARES: branco com texto laranja */
+.funciona-lista li:nth-child(odd) {
+  background: #fff;
+  color: var(--laranja);
+}
+
+/* efeito de levantar com sombra (sem brilho) */
+.funciona-lista li:hover,
+.funciona-lista li:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* feedback de clique */
+.funciona-lista li:active {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* reduz animações se o usuário preferir menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .funciona-lista li {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   O QUE VOCÊ VAI APRENDER
+   ========================================================= */
+.section-aprender {
+  padding: clamp(48px, 6vw, 72px) 0;
+
+  /* escala local */
+  --apr-item-size: clamp(18px, 1.9vw, 22px);
+  --apr-icon-size: clamp(18px, 1.8vw, 22px);
+
+  /* evita scroll horizontal ao usar margens negativas */
+  overflow: hidden;
+}
+
+.section-aprender .container {
+  display: grid;
+
+  /* colunas simétricas p/ centralização consistente */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  /* ZERA o espaço entre colunas */
+  column-gap: 0;
+  row-gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+
+  /* centraliza o grid dentro do container */
+  justify-content: center;
+
+  /* garante centralização independente da largura global */
+  max-width: none;
+  margin: 0 auto;
+}
+
+.section-aprender h2 {
+  margin: 0 0 20px;
+  line-height: 0.97;
+  font-size: 73px;
+}
+
+/* bloco de texto AVANÇA para a direita */
+.aprender-texto {
+  margin: 0 0 20px;
+  margin-right: 0;
+}
+
+/* LISTA – ícones e texto (mantidos maiores) */
+.aprender-lista {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px; /* mais perto do botão */
+}
+.aprender-lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.aprender-lista img {
+  width: var(--apr-icon-size);
+  height: var(--apr-icon-size);
+  margin-top: 4px; /* alinha com a primeira linha */
+  flex-shrink: 0;
+}
+.aprender-lista span {
+  color: var(--marrom);
+  font-size: var(--apr-item-size);
+  line-height: 1.24;
+  font-size: 25px;
+}
+
+/* botão da seção mais “grudado” no conteúdo */
+.section-aprender .btn-laranja {
+  width: 300px;
+  font-size: 23px;
+  margin-top: 20px;
+  border-radius: 25px;
+}
+
+/* IMAGEM AVANÇA para a esquerda */
+.aprender-img {
+  align-self: start;
+  justify-self: end; /* encosta a imagem à direita dentro do container */
+}
+.aprender-img img {
+  width: min(560px, 100%); /* ligeiramente maior para “tocar” visualmente */
+  border-radius: 28px;
+  display: block;
+}
+
+.section-aprender h2 {
+  margin: 0 0 20px; /* antes era apenas margin-bottom */
+  line-height: 0.97;
+}
+
+/* Garante alinhamento vertical central dos dois lados */
+.section-aprender .container {
+  align-items: start;
+}
+
+/* Força cada coluna a se “centrar” na linha do grid */
+.aprender-texto,
+.aprender-img {
+  align-self: center;
+}
+
+/* (opcional) Caso ainda note diferença, centraliza o conteúdo do bloco de texto */
+.aprender-texto {
+  display: flow-root; /* cria um BFC e evita qualquer colapso de margem interno */
+  /* ou use: display:grid; align-content:center;  */
+}
+
+/* telas maiores: cola um pouquinho mais */
+@media (min-width: 1280px) {
+  .aprender-texto {
+    margin-right: clamp(-40px, -2.4vw, -16px);
+  }
+  .aprender-img {
+    margin-left: clamp(-40px, -2.4vw, -16px);
+  }
+  .aprender-img img {
+    width: min(580px, 100%);
+  }
+}
+
+/* responsivo: 1 coluna e centraliza tudo */
+@media (max-width: 992px) {
+  .section-aprender .container {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    max-width: none;
+  }
+  .aprender-texto {
+    margin-right: 0;
+  }
+  .aprender-img {
+    justify-self: center;
+    margin-left: 0;
+  }
+  .aprender-img img {
+    width: min(440px, 100%);
+  }
+}
+
+/* =========================================================
+   RESULTADOS
+   ========================================================= */
+.section-resultados {
+  padding: clamp(48px, 6vw, 72px) 0;
+  padding-top: 70px;
+  padding-bottom: 120px;
+}
+
+/* Título tipo “pílula” laranja */
+.section-resultados h2 {
+  display: block;
+  width: fit-content; /* ou: width: -moz-fit-content; width: fit-content; */
+  margin: 0 auto clamp(22px, 3vw, 45px);
+  background: var(--laranja);
+  color: #fff;
+  padding: 5px 34px;
+  border-radius: 27px;
+  line-height: 1;
+}
+
+/* Grid dos cards */
+.resultados-casos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+  align-items: start;
+  justify-items: center;
+}
+
+/* Blocos ANTES/DEPOIS */
+.antes-depois {
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.antes-depois p {
+  font-family: "Mangaba", cursive; /* igual ao visual do título menor */
+  font-size: clamp(50px, 2.4vw, 78px);
+  color: var(--marrom);
+  margin: 0 0 8px;
+  letter-spacing: 0.2px;
+  line-height: 1.05;
+}
+
+.antes-depois img {
+  width: 100%;
+  display: block;
+  border-radius: 24px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Depoimento (cartão cinza com sombra) */
+.depoimento {
+  margin-left: 25px;
+  width: 500px;
+  max-width: 1020px;
+  background: #d9d9d9;
+  border: 0;
+  border-radius: 54px;
+  padding: clamp(46px, 2.2vw, 52px);
+  color: var(--marrom);
+  line-height: 1.45;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.depoimento p {
+  font-size: clamp(24px, 1.7vw, 21px);
+  margin: 0;
+}
+
+/* Primeira frase em destaque (você já usa <strong> no HTML) */
+.depoimento p strong {
+  font-family: "Satoshi Bold";
+  font-weight: 700;
+}
+
+/* Assinatura em itálico (você já usa <em> no HTML) */
+.depoimento p em {
+  display: block;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Responsivo: empilha em 1 coluna */
+@media (max-width: 980px) {
+  .resultados-casos {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .antes-depois,
+  .depoimento {
+    max-width: 520px;
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   CHAMADA PARA COMPRA
+   ========================================================= */
+.section-chamada {
+  background: var(--laranja);
+  padding: clamp(70px, 5.6vw, 60px) 0;
+  color: #fff;
+}
+
+.section-chamada .container {
+  display: grid;
+  /* colunas largas e SEM espaço entre elas */
+  grid-template-columns: minmax(560px, 1.08fr) minmax(520px, 0.92fr);
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ====== BLOCO ESQUERDO (texto) ====== */
+.chamada-info {
+  text-align: left; /* alinhado à esquerda, como na ref. */
+  justify-self: start;
+  max-width: 760px;
+  padding-left: 80px;
+}
+
+.section-chamada h2 {
+  margin: 0 0 10px;
+  font-size: clamp(52px, 6.8vw, 86px); /* maior */
+  line-height: 1.02;
+  letter-spacing: 0.2px;
+  color: var(--branco);
+  font-weight: 100;
+}
+
+.marrom {
+  font-weight: 100;
+}
+
+.chamada-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+.chamada-lista li {
+  display: flex;
+  align-items: center;
+  gap: 14px; /* mais ar entre ícone e texto */
+}
+.chamada-lista img {
+  width: 28px; /* ícone maior */
+  height: 28px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.chamada-lista span {
+  color: #fff;
+  font-size: 26px; /* tópico maior */
+  line-height: 1.22;
+}
+
+/* ====== CARD OFERTA ====== */
+.chamada-oferta {
+  background: #fff;
+  border-radius: 26px;
+  padding: 38px 90px; /* mais encorpado */
+  text-align: center;
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.12);
+  max-width: 540px; /* card maior */
+  justify-self: center;
+
+  /* cola o card no bloco da esquerda */
+  margin-left: -26px; /* ajuste fino p/ encostar */
+}
+.logo-oferta {
+  width: 96px; /* logo maior */
+  margin: 0 auto 9px;
+}
+.chamada-oferta h3 {
+  font-size: 66px; /* título do card maior */
+  margin-bottom: 8px;
+}
+
+.texto-promocional {
+  font-family: "Satoshi";
+  font-size: 22px; /* texto maior */
+  color: var(--marrom);
+  margin: 16px 0 24px;
+  line-height: 1.34;
+}
+.texto-promocional .medium {
+  font-family: "Satoshi Medium";
+}
+
+.preco-de {
+  font-size: 24px;
+  margin: 16px 0;
+  color: var(--marrom);
+}
+.preco-por {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px; /* compacto */
+  margin: 6px 0 12px;
+}
+.preco-label {
+  font-size: 22px;
+  color: var(--marrom);
+}
+.preco-final {
+  font-size: 68px; /* preço bem destacado */
+  font-family: "Satoshi Black";
+  color: var(--laranja);
+  line-height: 0.9;
+}
+
+/* botão maior e com menos ar em volta */
+.chamada-oferta .btn-laranja {
+  width: 100%;
+  padding: 20px 30px;
+  border-radius: 38px;
+  font-size: 24px;
+  margin-top: 25px;
+}
+
+/* badges maiores e centralizadas */
+.badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18.5px;
+  color: #9c9c9c;
+}
+.badge img {
+  width: 22px;
+  height: 22px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ====== ajustes finos ====== */
+@media (min-width: 1280px) {
+  /* encosta um tico mais em telas grandes */
+  .chamada-oferta {
+    margin-left: -32px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .section-chamada .container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .chamada-info {
+    text-align: center; /* facilita leitura no mobile */
+    justify-self: center;
+  }
+  .chamada-oferta {
+    margin-left: 0;
+    max-width: 560px;
+  }
+}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.section-duvidas {
+  padding: clamp(48px, 6vw, 72px) 0;
+  background: var(--branco);
+}
+
+/* Agora o grid tem 2 colunas fixas; cada coluna é um item do grid */
+.section-duvidas .container {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.9fr) minmax(520px, 1.1fr);
+  column-gap: clamp(18px, 3vw, 36px);
+  align-items: start; /* alinha topo a topo */
+  justify-content: center;
+}
+
+/* ----- COLUNA ESQUERDA (um único item no grid) ----- */
+.duvidas-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* controla a distância entre h2, subtítulo e botão */
+  align-self: start; /* gruda no topo do container */
+}
+
+.duvidas-left h2 {
+  margin: 0;
+  line-height: 0.95;
+  text-align: left;
+  font-size: 69px;
+}
+
+.duvidas-intro {
+  grid-area: sub;
+  margin: 0 0 16px;
+  text-align: left;
+  color: var(--marrom);
+  font-size: clamp(29px, 1.35vw, 73px);
+  line-height: 1.25;
+}
+
+/* Botão – mantém suas alterações e limita a largura */
+.section-duvidas .btn-small {
+  display: inline-flex; /* permite centralizar o texto com facilidade */
+  align-items: center;
+  justify-content: center; /* texto centralizado */
+  padding: 16px 32px;
+  min-height: 54px;
+  font-size: clamp(20px, 1.8vw, 26px);
+  border-radius: 25px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  width: 290px; /* largura que você pediu */
+}
+
+/* ----- COLUNA DIREITA (acordeon) ----- */
+.faq {
+  align-self: start; /* alinha pelo topo do h2 sem “puxar” a coluna esquerda */
+  max-width: 680px;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.faq-item {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.faq-question {
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  border: 0;
+
+  background: var(--marrom);
+  color: #fff;
+  border-radius: 14px;
+
+  padding: 16px 46px 16px 18px;
+  font-family: "Satoshi Bold";
+  font-size: clamp(15.5px, 1.5vw, 18px);
+  line-height: 1.2;
+
+  text-align: left; /* Alinha à esquerda */
+}
+
+.faq-question::after {
+  content: "▾";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.18s ease;
+  color: #fff;
+  font-size: 18px;
+}
+
+.faq-answer {
+  display: block; /* garante que nunca será none */
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+
+  /* padding colapsado (abre com transição) */
+  padding: 0 6px;
+
+  /* transições suaves */
+  transition: height 320ms ease, opacity 250ms ease, padding 320ms ease;
+  will-change: height, opacity;
+
+  color: var(--marrom);
+  font-size: clamp(15px, 1.45vw, 17px);
+  line-height: 1.45;
+}
+
+.faq-item.open .faq-answer {
+  opacity: 1;
+  padding: 12px 6px 6px 4px;
+  margin-top: 10px;
+}
+
+/* seta gira quando aberto */
+.faq-item.open .faq-question::after,
+.faq-item.active .faq-question::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Responsivo: uma coluna */
+@media (max-width: 980px) {
+  .section-duvidas .container {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+  .duvidas-left {
+    align-items: center;
+    text-align: center;
+  }
+  .duvidas-left h2,
+  .duvidas-intro {
+    text-align: inherit;
+  }
+  .section-duvidas .btn-small {
+    align-self: center;
+  }
+  .faq {
+    max-width: none;
+  }
+}
+
+.faq-question {
+  transition: background-color 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 160ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: background-color, box-shadow, transform;
+}
+
+.faq-item:hover .faq-question,
+.faq-question:hover {
+  /* marrom um pouco mais claro + leve elevação */
+  background-color: #32160f; /* tom sutilmente mais claro do marrom */
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(242, 81, 22, 0.2); /* aro laranja muito sutil */
+}
+
+/* seta dá um “respiro” no hover */
+.faq-item:hover .faq-question::after,
+.faq-question:hover::after {
+  transform: translateY(-50%) translateX(2px);
+}
+
+/* Acessibilidade: mesmo feedback no focus pelo teclado */
+.faq-question:focus-visible {
+  outline: none;
+  background-color: #32160f;
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px rgba(242, 81, 22, 0.35);
+}
+
+/* Reduz movimentos se o usuário preferir */
+@media (prefers-reduced-motion: reduce) {
+  .faq-question {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer {
+  padding: 26px 0 40px;
+  text-align: center;
+  color: #6f5b55;
+  font-size: 14px;
+}
+
+/* =========================================================
+   RESPONSIVO GERAL
+   ========================================================= */
+@media (max-width: 992px) {
+  .section-aprender .container,
+  .section-chamada .container,
+  .section-poder .container {
+    grid-template-columns: 1fr;
+  }
+  .section-chamada .container {
+    gap: 34px;
+  }
+  .chamada-oferta {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 720px) {
+  h1 {
+    font-size: 36px;
+  }
+  h2 {
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 24px;
+  }
+
+  .cards-dietas {
+    grid-template-columns: 1fr;
+  }
+  .resultados-casos {
+    grid-template-columns: 1fr;
+  }
+  .preco-final {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 460px) {
+  .card {
+    padding-left: 72px;
+  }
+  .preco-final {
+    font-size: 40px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE PATCH – desktop intacto (append-only)
+   ========================================================= */
+
+/* 1) HERO — centraliza conteúdo e ajusta o CTA no tablet */
+@media (max-width: 1024px) {
+  .hero-content {
+    text-align: center;
+    margin: 0 auto;
+  }
+  .hero-section .logo {
+    margin: 0 auto 14px;
+  }
+  .hero-section p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* 2) PODER DO PSYLLIUM — vira 1 coluna + tipografia confortável */
+@media (max-width: 992px) {
+  .section-poder .container {
+    grid-template-columns: 1fr;
+  }
+  .poder-img {
+    justify-self: center;
+    margin-right: 0;
+  }
+  .poder-texto {
+    max-width: 100%;
+    text-align: center;
+  }
+  .poder-descricao {
+    font-size: clamp(16px, 3.2vw, 22px);
+  }
+  .beneficios-lista span {
+    font-size: clamp(16px, 3.2vw, 20px);
+  }
+}
+
+/* 3) POR QUE FUNCIONA TÃO BEM — container mais compacto em mobile */
+@media (max-width: 768px) {
+  .dark-bg {
+    border-radius: 32px;
+    padding: 28px;
+  }
+  .funciona-lista li {
+    font-size: clamp(15px, 3.6vw, 18px);
+    padding: 12px 10px;
+  }
+}
+
+/* 4) O QUE VOCÊ VAI APRENDER — 1 coluna, centraliza e dimensiona */
+@media (max-width: 992px) {
+  .section-aprender .container {
+    grid-template-columns: 1fr;
+  }
+  .aprender-texto {
+    text-align: center;
+    margin-right: 0;
+  }
+  .section-aprender h2 {
+    font-size: clamp(28px, 7vw, 44px);
+    margin-bottom: 16px;
+  }
+  .aprender-lista span {
+    font-size: clamp(16px, 3.2vw, 20px);
+  }
+  .section-aprender .btn-laranja {
+    width: min(300px, 100%);
+    font-size: clamp(16px, 3.4vw, 20px);
+    margin-inline: auto;
+  }
+  .aprender-img {
+    justify-self: center;
+    margin-left: 0;
+  }
+  .aprender-img img {
+    width: min(440px, 100%);
+  }
+}
+
+/* 5) DIETAS — 2→1 coluna já definido; só tipografia mais legível */
+@media (max-width: 992px) {
+  .section-dietas > .container > p {
+    font-size: clamp(16px, 3.4vw, 20px);
+  }
+  .card-text {
+    font-size: clamp(15px, 3.2vw, 18px);
+  }
+}
+
+/* 6) RESULTADOS — suaviza títulos e depoimento no mobile */
+@media (max-width: 992px) {
+  .antes-depois p {
+    font-size: clamp(28px, 6vw, 40px);
+  }
+  .depoimento {
+    max-width: 560px;
+    margin-left: 0;
+  }
+  .depoimento p {
+    font-size: clamp(16px, 3.4vw, 20px);
+  }
+}
+
+/* 7) CHAMADA PARA COMPRA — 1 coluna e centraliza; fontes responsivas */
+@media (max-width: 1100px) {
+  .section-chamada .container {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .chamada-info {
+    text-align: center;
+    padding-left: 0;
+    justify-self: center;
+  }
+  .chamada-oferta {
+    margin-left: 0;
+    max-width: 560px;
+    justify-self: center;
+  }
+}
+@media (max-width: 768px) {
+  .section-chamada h2 {
+    font-size: clamp(28px, 8vw, 40px);
+    line-height: 1.08;
+  }
+  .chamada-lista span {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .chamada-oferta h3 {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+  .texto-promocional {
+    font-size: clamp(14px, 3.8vw, 18px);
+  }
+  .preco-de,
+  .preco-label {
+    font-size: clamp(14px, 3.6vw, 18px);
+  }
+  .preco-final {
+    font-size: clamp(32px, 9vw, 48px);
+  }
+}
+
+/* 8) FAQ — 1 coluna e fontes menores no mobile */
+@media (max-width: 980px) {
+  .section-duvidas .container {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+  .duvidas-left {
+    align-items: center;
+    text-align: center;
+  }
+  .duvidas-left h2,
+  .duvidas-intro {
+    text-align: inherit;
+  }
+  .section-duvidas .btn-small {
+    align-self: center;
+  }
+  .faq {
+    max-width: none;
+  }
+}
+@media (max-width: 560px) {
+  .duvidas-left h2 {
+    font-size: clamp(26px, 7.6vw, 38px);
+  }
+  .duvidas-intro {
+    font-size: clamp(14px, 3.8vw, 18px);
+  }
+  .faq-question {
+    padding: 14px 40px 14px 14px;
+    font-size: clamp(14px, 3.8vw, 16px);
+  }
+  .faq-answer {
+    font-size: clamp(14px, 3.6vw, 16px);
+  }
+}
+
+/* 9) Ajustes globais finais para telas pequenas */
+@media (max-width: 560px) {
+  .container {
+    width: 92%;
+  }
+  .btn-laranja {
+    padding: 12px 20px;
+    border-radius: 28px;
+  }
+  .section-resultados h2 {
+    padding: 4px 18px;
+    border-radius: 22px;
+  }
+}
+
+/* 10) Tipografia global mais confortável no mobile (sem tocar desktop) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(28px, 8.6vw, 44px);
+  }
+  h2 {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+  h3 {
+    font-size: clamp(18px, 4.6vw, 24px);
+  }
+  p {
+    font-size: clamp(14px, 3.6vw, 18px);
+  }
+}
+
+@media (max-width: 560px) {
+  /* mais respiro vertical proporcional */
+  .hero-section .container {
+    padding: 80px 0 66px; /* era 72px 0 60px */
+  }
+
+  /* logo 10% maior */
+  .hero-section .logo {
+    width: 85px; /* era 68px */
+    margin: 0 auto 16px;
+  }
+
+  /* título 10% maior */
+  .hero-section h1 {
+    font-size: clamp(64px, 5.94vw, 92px); /* +10% nos 3 limites */
+    text-align: center;
+  }
+
+  /* parágrafo 10% maior */
+  .hero-section p {
+    font-size: clamp(25px, 2.3vw, 28px); /* era clamp(18px,2.1vw,25px) */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* botão 10% maior */
+  .hero-section .btn-laranja {
+    width: clamp(286px, 88vw, 462px); /* era clamp(260px,80vw,420px) */
+    padding: 18px 36px; /* era 16px 32px */
+    font-size: clamp(20px, 5.8vw, 26px); /* era clamp(18px,5.2vw,24px) */
+    border-radius: 33px; /* levemente maior para manter proporção */
+  }
+
+  /* livro 10% maior */
+  .manual-img {
+    width: clamp(596px, 70vw, 672px); /* era clamp(360px,64vw,520px) */
+    margin-top: 28px; /* era 24px */
+  }
+}
+
+/* === DIETAS (mobile) – 10% maior + conteúdo centralizado === */
+@media (max-width: 560px) {
+  /* títulos e parágrafo introdutório um pouco maiores */
+  .section-dietas h2 {
+    font-size: clamp(58px, 4vw, 76px); /* ~+10% */
+    text-align: center;
+  }
+  .section-dietas > .container > p {
+    font-size: 25px; /* era ~27px */
+    text-align: center;
+  }
+
+  /* escala local dos cards (~+10%) */
+  .section-dietas {
+    --card-icon-size: 42px; /* era ~38px */
+    --card-text-size: 17.6px; /* era ~16px */
+    --card-line: 1.22; /* um pouquinho mais de respiro */
+  }
+
+  /* cards em coluna, centralizados */
+  .cards-dietas {
+    grid-template-columns: 1fr; /* já acontece em 820px, garantimos aqui */
+    gap: 20px;
+  }
+
+  .cards-dietas .card {
+    /* layout centralizado no mobile */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* remove o recuo pensado para o ícone à esquerda */
+    padding: 22px 20px;
+    min-height: 0;
+    text-align: center;
+  }
+
+  /* ícone deixa de ser absoluto e vai para o fluxo para centralizar */
+  .cards-dietas .card img {
+    position: static;
+    width: calc(var(--card-icon-size) * 1); /* já 10% maior via var */
+    height: calc(var(--card-icon-size) * 1);
+    object-fit: contain;
+    transform: none;
+    margin: 0 0 10px;
+  }
+
+  /* texto já usa var — fica automaticamente ~10% maior */
+  .cards-dietas .card .card-text {
+    font-size: clamp(22px, 4.2vw, var(--card-text-size));
+    line-height: var(--card-line);
+  }
+
+  /* animação do ícone adaptada (sem translateY) */
+  .cards-dietas .card:hover img,
+  .cards-dietas .card:focus-within img {
+    transform: scale(1.06) rotate(-2deg);
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
+  }
+
+  /* alerta um tiquinho maior */
+  .alert-box {
+    font-size: 1.06em;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-poder {
+    padding: clamp(30px, 8vw, 62px) 0;
+    justify-content: center;
+  }
+
+  .section-poder .container {
+    grid-template-columns: 1fr; /* garante 1 coluna */
+    row-gap: clamp(14px, 6vw, 28px);
+    justify-content: center;
+  }
+
+  /* Imagem centralizada e maior */
+  .poder-img {
+    justify-self: center;
+    margin: 0 auto 12px;
+  }
+  .poder-img img {
+    width: min(760px, 92vw);
+    border-radius: 28px;
+  }
+
+  /* Título bem destacado */
+  .section-poder h2 {
+    text-align: center;
+    font-size: clamp(62px, 9vw, 74px);
+    line-height: 1.08;
+  }
+
+  /* Descrição “consideravelmente” maior e centralizada */
+  .poder-descricao {
+    text-align: center;
+    font-size: clamp(27px, 5.4vw, 32px);
+    line-height: 1.28;
+    margin: 12px auto 26px;
+    max-width: 32ch;
+  }
+
+  .beneficios-lista {
+    /* o UL vira um bloco centralizado */
+    width: clamp(260px, 86vw, 520px);
+    margin: 12px auto 0; /* centraliza o grupo */
+    justify-items: center; /* neutraliza center anterior, se houver */
+  }
+
+  .beneficios-lista li {
+    /* ícone + texto alinhados à esquerda */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    text-align: center;
+    width: 100%;
+    margin-left: 50px;
+  }
+
+  .beneficios-lista img {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .beneficios-lista span {
+    display: block;
+    font-size: clamp(18px, 5.2vw, 28px);
+    line-height: 1.28;
+  }
+}
+
+@media (max-width: 768px) {
+  /* mais respiro da seção como um todo */
+  .section-funciona {
+    padding: clamp(70px, 11vw, 110px) 0;
+  }
+
+  /* aumenta a “altura” do background marrom via padding */
+  .section-funciona .dark-bg {
+    padding: clamp(34px, 8vw, 64px) clamp(18px, 6vw, 32px);
+    /* opcional: deixa o pill mais “cheio” */
+    border-radius: 26px;
+  }
+
+  /* título maior */
+  .section-funciona h2 {
+    font-size: clamp(50px, 8vw, 42px);
+    margin-bottom: clamp(14px, 3.6vw, 22px);
+    text-align: center;
+  }
+
+  /* cards com mais ar e tipografia maior */
+  .funciona-lista {
+    gap: clamp(12px, 3.6vw, 18px);
+    max-width: 620px;
+  }
+  .funciona-lista li {
+    font-size: clamp(19px, 5.4vw, 24px);
+    padding: clamp(14px, 4.2vw, 20px) clamp(14px, 5vw, 24px);
+    line-height: 1.26;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-aprender {
+    padding: clamp(56px, 9vw, 80px) 0;
+  }
+
+  .section-aprender .container {
+    grid-template-columns: 1fr; /* stack */
+    justify-items: center;
+  }
+
+  /* Bloco de texto centralizado como grupo */
+  .aprender-texto {
+    width: min(620px, 92%);
+    margin: 0 auto;
+    text-align: center; /* título central */
+  }
+
+  .section-aprender h2 {
+    font-size: clamp(54px, 9vw, 46px);
+    margin-bottom: clamp(12px, 3vw, 18px);
+    line-height: 1.05;
+  }
+
+  /* Lista alinhada à esquerda, mas centralizada como grupo */
+  .aprender-lista {
+    width: min(620px, 92%);
+    margin-top: 20px;
+    margin-left: 65px;
+    display: grid;
+    gap: clamp(8px, 2.4vw, 12px);
+    text-align: left;
+  }
+  .aprender-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(10px, 2.6vw, 14px);
+  }
+  .aprender-lista img {
+    width: clamp(18px, 5.8vw, 22px);
+    height: clamp(18px, 5.8vw, 22px);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .aprender-lista span {
+    font-size: clamp(17px, 4.8vw, 22px);
+    line-height: 1.32;
+  }
+
+  /* Botão maior e centralizado */
+  .section-aprender .btn-laranja {
+    display: block;
+    width: clamp(260px, 88vw, 360px);
+    margin: clamp(18px, 4vw, 26px) auto 6px;
+    padding: clamp(16px, 4.6vw, 22px) clamp(22px, 8vw, 30px);
+    font-size: clamp(18px, 5vw, 24px);
+    border-radius: 32px;
+  }
+
+  /* Imagem central e dimensionada para telas pequenas */
+  .aprender-img {
+    justify-self: center;
+    margin: clamp(16px, 4vw, 26px) 0 0;
+  }
+  .aprender-img img {
+    width: clamp(280px, 86vw, 420px);
+  }
+}
+
+@media (max-width: 768px) {
+  .section-resultados {
+    padding: clamp(32px, 8vw, 64px) 0;
+  }
+
+  /* Título pílula mais legível no mobile */
+  .section-resultados h2 {
+    font-size: clamp(42px, 6.2vw, 40px);
+    padding: clamp(6px, 1.8vw, 10px) clamp(18px, 5vw, 28px);
+    border-radius: 24px;
+    margin-bottom: clamp(20px, 5vw, 28px);
+  }
+
+  .resultados-casos {
+    gap: clamp(14px, 4vw, 22px);
+    justify-items: center;
+  }
+
+  /* Texto "ANTES"/"DEPOIS" maior */
+  .antes-depois p {
+    font-size: clamp(39px, 10vw, 50px);
+    margin-bottom: clamp(6px, 2vw, 10px);
+  }
+
+  /* Imagens menores e centralizadas */
+  .antes-depois img {
+    width: clamp(240px, 82vw, 340px); /* <<< reduz o tamanho no mobile */
+    margin: 0 auto;
+  }
+
+  /* Card de depoimento mais confortável para leitura */
+  .depoimento {
+    width: min(92%, 520px);
+    padding: clamp(22px, 5vw, 34px);
+    border-radius: 36px;
+    margin-top: 10px;
+  }
+  .depoimento p {
+    font-size: clamp(18px, 4.8vw, 22px);
+    line-height: 1.42;
+  }
+}
+
+/* ================================
+   CHAMADA PARA COMPRA – Mobile (≤768px)
+   Textos maiores e legibilidade melhor
+   ================================ */
+@media (max-width: 768px) {
+  .section-chamada {
+    padding: clamp(64px, 10vw, 92px) 0;
+  }
+
+  /* Título principal da coluna esquerda */
+  .section-chamada h2 {
+    font-size: clamp(56px, 9.4vw, 44px);
+    line-height: 1.05;
+    text-align: center;
+  }
+
+  /* Itens da lista (conteúdo direto, manual, suporte, garantia) */
+  .chamada-lista {
+    gap: clamp(10px, 3.6vw, 14px);
+  }
+  .chamada-lista span {
+    font-size: clamp(22px, 4.8vw, 22px);
+    line-height: 1.28;
+  }
+
+  /* Título do card (O MANUAL DO PSYLLIUM) */
+  .chamada-oferta h3 {
+    font-size: clamp(44px, 9.6vw, 46px);
+    margin-bottom: clamp(6px, 2vw, 10px);
+  }
+
+  /* Textos do card */
+  .texto-promocional {
+    font-size: clamp(19px, 4.8vw, 20px);
+    line-height: 1.36;
+    margin: clamp(12px, 3.6vw, 18px) 0 clamp(16px, 4vw, 22px);
+  }
+  .preco-de {
+    font-size: clamp(16px, 4.6vw, 20px);
+  }
+  .preco-por {
+    gap: clamp(6px, 2.2vw, 10px);
+  }
+  .preco-label {
+    font-size: clamp(16px, 4.6vw, 20px);
+  }
+  .preco-final {
+    font-size: clamp(46px, 12.5vw, 58px);
+  }
+
+  /* Botão principal do card */
+  .chamada-oferta .btn-laranja {
+    font-size: clamp(18px, 5.2vw, 22px);
+    padding: clamp(14px, 4.8vw, 20px) clamp(18px, 6vw, 32px);
+    border-radius: 34px;
+    margin-top: clamp(18px, 5vw, 26px);
+  }
+
+  /* Badges sob o botão */
+  .badges {
+    gap: clamp(12px, 4vw, 18px);
+  }
+  .badge {
+    font-size: clamp(12px, 3.8vw, 15px);
+  }
+}
+
+@media (max-width: 768px) {
+  .section-duvidas {
+    padding: clamp(56px, 10vw, 84px) 0;
+  }
+
+  .section-duvidas .container {
+    grid-template-columns: 1fr;
+    row-gap: clamp(14px, 4vw, 22px);
+    justify-items: center;
+  }
+
+  .duvidas-left {
+    align-items: center;
+    text-align: center;
+    gap: clamp(8px, 3.6vw, 14px);
+  }
+
+  /* Headline */
+  .duvidas-left h2 {
+    font-size: clamp(52px, 9vw, 44px);
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  /* Subtitle */
+  .duvidas-intro {
+    font-size: clamp(25px, 4.8vw, 22px);
+    line-height: 1.35;
+    margin: clamp(4px, 2.6vw, 2px) 0 clamp(4px, 3.4vw, 32px);
+  }
+}
+
+@media (max-width: 768px) {
+  /* aumenta a distância entre o bloco (com botão) e o acordeon */
+  .section-duvidas .container {
+    row-gap: clamp(26px, 7vw, 44px);
+  }
+
+  /* mantém o bloco alinhado e com respiro interno */
+  .duvidas-left {
+    gap: clamp(6px, 2.4vw, 10px);
+    align-items: center;
+    text-align: center;
+  }
+
+  /* subtítulo mais perto da headline */
+  .duvidas-left h2 {
+    margin-bottom: clamp(2px, 1.2vw, 1px);
+  }
+
+  /* subtítulo longe do botão */
+  .duvidas-intro {
+    margin-top: clamp(1px, 0.8vw, 1px); /* encosta no h2 */
+    margin-bottom: clamp(16px, 5vw, 24px); /* afasta do botão */
+  }
+
+  /* evita somar margens e garante centralização do CTA */
+  .section-duvidas .btn-small {
+    margin-top: 0;
+    align-self: center;
+  }
+}
+
+/* =========================================================
+   FAQ – tipografia maior (pergunta + resposta)
+   ========================================================= */
+
+/* Pergunta (header do item) */
+.faq-question {
+  font-size: clamp(19px, 2vw, 20px); /* antes ~15.5–18px */
+  line-height: 1.25;
+  padding: 18px 50px 18px 20px; /* +2px vertical de respiro */
+}
+
+/* Ícone/“seta” acompanha o novo tamanho */
+.faq-question::after {
+  font-size: 30px; /* antes 18px */
+}
+
+/* Resposta (conteúdo expandido) */
+.faq-answer {
+  font-size: clamp(19px, 1.9vw, 19px); /* antes ~15–17px */
+  line-height: 1.55; /* leitura mais confortável */
+}
+
+/* Garante que o <p> herde o tamanho ajustado */
+.faq-answer p {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0; /* evita “empurrões” extras */
+}
