@@ -128,3 +128,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 })();
+
+(function () {
+  var OFFSET = 12; // ajuste fino no topo
+
+  // delegação de eventos: funciona para qualquer <a href="#...">
+  document.addEventListener(
+    "click",
+    function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      var hash = link.getAttribute("href");
+      if (!hash || hash === "#" || hash.length < 2) return;
+
+      var target = document.querySelector(hash);
+      if (!target) return;
+
+      e.preventDefault();
+
+      var y = Math.round(
+        target.getBoundingClientRect().top + window.pageYOffset - OFFSET
+      );
+
+      // smooth se suportado e se o usuário não preferiu menos movimento
+      var reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      if (!reduce && "scrollBehavior" in document.documentElement.style) {
+        window.scrollTo({ top: y, behavior: "smooth" });
+      } else {
+        window.scrollTo(0, y);
+      }
+
+      // atualiza a barra de endereços sem recarregar
+      history.replaceState(null, "", hash);
+    },
+    { passive: true }
+  );
+})();
