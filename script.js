@@ -130,40 +130,45 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 (function () {
-  var OFFSET = 12; // ajuste fino no topo
+  var links = document.querySelectorAll('a[href^="#"]');
+  if (!links.length) return;
 
-  // delegação de eventos: funciona para qualquer <a href="#...">
-  document.addEventListener(
-    "click",
-    function (e) {
-      var link = e.target.closest('a[href^="#"]');
-      if (!link) return;
+  function onClick(e) {
+    var hash = this.getAttribute("href");
+    if (!hash || hash.length < 2) return;
+    var id = hash.slice(1);
+    var target = document.getElementById(id);
+    if (!target) return;
 
-      var hash = link.getAttribute("href");
-      if (!hash || hash === "#" || hash.length < 2) return;
+    e.preventDefault();
+    var prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-      var target = document.querySelector(hash);
-      if (!target) return;
-
-      e.preventDefault();
-
-      var y = Math.round(
-        target.getBoundingClientRect().top + window.pageYOffset - OFFSET
-      );
-
-      // smooth se suportado e se o usuário não preferiu menos movimento
-      var reduce = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      if (!reduce && "scrollBehavior" in document.documentElement.style) {
-        window.scrollTo({ top: y, behavior: "smooth" });
-      } else {
-        window.scrollTo(0, y);
+    // Usa a geometria real do elemento (independe de transform no wrapper)
+    if (target.scrollIntoView) {
+      target.scrollIntoView({
+        behavior: prefersReduced ? "auto" : "smooth",
+        block: "start",
+        inline: "nearest",
+      });
+    } else {
+      // fallback bem antigo
+      var y = 0,
+        el = target;
+      while (el) {
+        y += el.offsetTop || 0;
+        el = el.offsetParent;
       }
+      window.scrollTo(0, y - 12);
+    }
 
-      // atualiza a barra de endereços sem recarregar
-      history.replaceState(null, "", hash);
-    },
-    { passive: true }
-  );
+    try {
+      history.replaceState(null, "", "#" + id);
+    } catch (_) {}
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", onClick, { passive: false });
+  });
 })();

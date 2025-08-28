@@ -2116,3 +2116,31 @@ footer {
   line-height: inherit;
   margin: 0; /* evita “empurrões” extras */
 }
+
+@supports not (zoom: 1) {
+  body {
+    transform: none !important;
+    width: auto !important;
+  }
+  .page-scale {
+    transform: scale(var(--page-scale));
+    transform-origin: top center;
+    width: calc(100% / var(--page-scale));
+    min-height: 100%;
+  }
+}
+
+/* margem de respiro da âncora */
+#compra {
+  scroll-margin-top: 20px;
+}
+
+/* garantias de clique no mobile */
+.btn-laranja {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+.hero-section .manual-img {
+  pointer-events: none;
+} /* você já tinha */
